@@ -1,0 +1,44 @@
+ Utilisation du modèle distilgpt2-bgl-colab pour générer des logs
+
+## Introduction
+Ce modèle est une version fine-tunée de `DistilGPT-2` spécifiquement adaptée pour générer des logs bgl synthétiques. Il est pré-entraîné pour comprendre les structures de logs bgl et peut être utilisé pour générer de nouveaux logs dans ce format.
+
+## Prérequis
+- Python 3.x
+- Bibliothèque `transformers` de Hugging Face
+- Bibliothèque `torch` (PyTorch)
+
+## Installation des dépendances
+Avant de commencer, assurez-vous d'installer les bibliothèques nécessaires :
+
+```bash
+pip install transformers torch
+
+## Charger et utiliser le modèle
+
+Voici un exemple de code pour charger le modèle et générer des logs à l'aide de
+--------------------------------------------------------------------------------------------------------
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+# Charger le modèle et le tokenizer depuis Hugging Face
+model_name = "soufianetaf/distilgpt2-bgl-colab"
+model = AutoModelForCausalLM.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+# Fonction pour générer des logs
+def generate_log(prompt, max_length=100):
+    inputs = tokenizer(prompt, return_tensors="pt")
+    outputs = model.generate(inputs["input_ids"], max_length=max_length, num_return_sequences=1)
+    log = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    return log
+
+# Exemple de génération de log
+prompt = "BGL log entry: "
+generated_log = generate_log(prompt)
+print(generated_log)
+----------------------------------------------------------------------------------------------------------------------
+## Paramètres
+
+prompt: Le début du log que vous souhaitez générer.
+
+max_length: La longueur maximale du log généré. Vous pouvez ajuster ce paramètre pour générer des logs plus longs ou plus courts.
