@@ -15,7 +15,7 @@ The project consists of the following stages:
 
 The following diagram illustrates the workflow of the project:
 
-![Pipeline Workflow](path/to/pipline_gen.gif)
+![Pipeline Workflow](pipline_gen.gif)
 
 ## Getting Started
 
